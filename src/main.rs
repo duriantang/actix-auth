@@ -10,6 +10,7 @@ extern crate failure;
 mod app;
 mod errors;
 mod invitation_handler;
+mod invitation_routes;
 mod models;
 mod schema;
 
