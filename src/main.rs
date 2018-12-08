@@ -8,6 +8,7 @@ extern crate serde_derive;
 extern crate failure;
 
 mod app;
+mod errors;
 mod models;
 mod schema;
 
