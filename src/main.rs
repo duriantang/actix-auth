@@ -6,6 +6,8 @@ extern crate diesel;
 extern crate serde_derive;
 #[macro_use]
 extern crate failure;
+#[macro_use]
+extern crate log;
 
 mod app;
 mod errors;
@@ -23,6 +25,8 @@ use std::env;
 
 fn main() {
     dotenv().ok();
+    info!("enviroment init success");
+
     let database_url = env::var("DATABASE_URL").expect("DATABASE_URL must be set");
     let sys = actix::System::new("Actix_Tutorial");
 
@@ -31,12 +35,18 @@ fn main() {
         .build(manager)
         .expect("Failed to create pool.");
 
-    let address: Addr<DbExecutor> = SyncArbiter::start(4, move || DbExecutor(pool.clone()));
+    let address: Addr<DbExecutor> = SyncArbiter::start(4, move || {
+        info!("start pool");
+        DbExecutor(pool.clone())
+    });
 
-    server::new(move || app::create_app(address.clone()))
-        .bind("127.0.0.1:3000")
-        .expect("Can not bind to '127.0.0.1:3000")
-        .start();
-
+    server::new(move || {
+        info!("create app");
+        app::create_app(address.clone())
+    })
+    .bind("127.0.0.1:3000")
+    .expect("Can not bind to '127.0.0.1:3000")
+    .start();
+    info!("start sys");
     sys.run();
 }
