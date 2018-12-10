@@ -30,8 +30,9 @@ use std::env;
 
 fn main() {
     dotenv().ok();
+    pretty_env_logger::init();
     info!("enviroment init success");
-
+    std::env::set_var("RUST_LOG", "debug");
     let database_url = env::var("DATABASE_URL").expect("DATABASE_URL must be set");
     let sys = actix::System::new("Actix_Tutorial");
 
@@ -40,7 +41,7 @@ fn main() {
         .build(manager)
         .expect("Failed to create pool.");
 
-    let address: Addr<DbExecutor> = SyncArbiter::start(4, move || {
+    let address: Addr<DbExecutor> = SyncArbiter::start(1, move || {
         info!("start pool");
         DbExecutor(pool.clone())
     });
