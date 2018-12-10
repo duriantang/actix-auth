@@ -1,4 +1,9 @@
-#![allow(proc_macro_derive_resolution_fallback)]
+#![allow(
+    dead_code,
+    proc_macro_derive_resolution_fallback,
+    unused_imports,
+    unused_variables
+)]
 
 #[macro_use]
 extern crate diesel;
