@@ -12,6 +12,9 @@ pub fn create_app(db: AddrDbExecutor) -> App<AppState> {
     App::with_state(AppState { db })
         .middleware(middleware::Logger::new("\"%r\" %s %b %Dms"))
         .resource("/auth", |r| {})
-        .resource("/invitation/", |r| {})
+        .resource("/invitation/", |r| {
+            r.method(Method::POST)
+                .with(crate::invitation_routes::register_email);
+        })
         .resource("/register/", |r| {})
 }
