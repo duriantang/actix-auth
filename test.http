@@ -1,0 +1,12 @@
+
+@host = localhost
+@port = 3000
+
+###
+
+POST http://{{host}}:{{port}}/invitation/ HTTP/1.1
+Content-Type: application/json
+
+{
+    "email": "test@test.com"
+}
