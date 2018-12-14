@@ -20,6 +20,7 @@ mod invitation_handler;
 mod invitation_routes;
 mod models;
 mod schema;
+mod utils;
 
 use crate::models::DbExecutor;
 use ::actix::prelude::*;
