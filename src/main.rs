@@ -20,6 +20,7 @@ mod invitation_handler;
 mod invitation_routes;
 mod models;
 mod register_handler;
+mod register_routes;
 mod schema;
 mod utils;
 

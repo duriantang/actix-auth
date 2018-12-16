@@ -16,5 +16,8 @@ pub fn create_app(db: AddrDbExecutor) -> App<AppState> {
             r.method(Method::POST)
                 .with(crate::invitation_routes::register_email);
         })
-        .resource("/register/", |r| {})
+        .resource("/register/{invitation_id}", |r| {
+            r.method(Method::POST)
+                .with(crate::register_routes::register_user);
+        })
 }
