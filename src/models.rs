@@ -1,6 +1,6 @@
 use crate::schema::{invitations, users};
 use actix::{Actor, SyncContext};
-use chrono::NaiveDateTime;
+use chrono::{Local, NaiveDateTime};
 use diesel::{
     pg::PgConnection,
     r2d2::{ConnectionManager, Pool},
@@ -27,6 +27,24 @@ impl User {
     pub fn remove_pwd(mut self) -> Self {
         self.password = "".to_string();
         self
+    }
+    pub fn with_details(email: String, password: String) -> Self {
+        User {
+            email,
+            password,
+            created_at: Local::now().naive_local(),
+        }
+    }
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct SlimUser {
+    pub email: String,
+}
+
+impl From<User> for SlimUser {
+    fn from(user: User) -> Self {
+        SlimUser { email: user.email }
     }
 }
 
