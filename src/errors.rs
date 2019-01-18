@@ -26,13 +26,13 @@ impl ResponseError for ServiceError {
 }
 
 impl From<ParseError> for ServiceError {
-    fn from(_: ParseError) -> ServiceError {
+    fn from(_: ParseError) -> Self {
         ServiceError::BadRequest("Invalid UUID".into())
     }
 }
 
 impl From<Error> for ServiceError {
-    fn from(error: Error) -> ServiceError {
+    fn from(error: Error) -> Self {
         match error {
             Error::DatabaseError(kind, info) => {
                 if let DatabaseErrorKind::UniqueViolation = kind {
